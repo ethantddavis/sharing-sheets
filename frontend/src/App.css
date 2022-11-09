@@ -1,0 +1,53 @@
+.App, .body {
+  display: flex;
+  flex-direction: column;
+  background-color: #2f74c0;
+  height: 100%;
+  min-height: 90vh;
+}
+
+.heading {
+  background-color: darkblue;
+  height: 120px;
+}
+
+.page-title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.page-title {
+  font-size: 30px;
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.nav {
+  order: -1;
+  background-color: #155394;
+}
+
+.sidebar {
+  background-color: #155394;
+}
+
+.footer {
+  height: 10vh;
+  background-color: darkblue;
+}
+
+@media (min-width: 768px) {
+  .body {
+    flex-direction: row;
+    flex: 1;
+  }
+  .content {
+    flex: 1;
+  }
+  .nav, .sidebar {
+    /* 12em is the width of the columns */
+    flex: 0 0 10em;
+  }
+}
