@@ -17,30 +17,28 @@ contract Sheets is ERC721, ERC721Enumerable, ERC721URIStorage {
     constructor() ERC721("Sheets", "SHT") {}
 
     function safeMint(
-        address to, 
-        string memory uri, 
         string[] memory authors, 
-        string memory title
+        string memory title,
+        string memory uri
     ) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _authors[tokenId] = authors;
         _title[tokenId] = title;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
     function safeMint(
-        address to, 
-        string memory uri, 
         string memory author, 
-        string memory title
+        string memory title,
+        string memory uri
     ) public {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _authors[tokenId][0] = author;
         _title[tokenId] = title;
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
