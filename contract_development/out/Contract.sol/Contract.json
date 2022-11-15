@@ -1,0 +1,56 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212206cac25844dd058de5d927b51e225c96bf8f9e99696de0ade7fc5252060ce18d264736f6c634300080d0033",
+    "sourceMap": "65:20:28:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea26469706673582212206cac25844dd058de5d927b51e225c96bf8f9e99696de0ade7fc5252060ce18d264736f6c634300080d0033",
+    "sourceMap": "65:20:28:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "C:\\Users\\Ethan Davis\\Documents\\Files\\defiWizardry\\sharing-sheets\\sharing-sheets\\contract_development\\src\\Contract.sol",
+    "id": 24650,
+    "exportedSymbols": {
+      "Contract": [
+        24649
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:47:28",
+    "nodes": [
+      {
+        "id": 24648,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:28",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 24649,
+        "nodeType": "ContractDefinition",
+        "src": "65:20:28",
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Contract",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          24649
+        ],
+        "name": "Contract",
+        "nameLocation": "74:8:28",
+        "scope": 24650,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  }
+}
