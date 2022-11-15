@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 interface Props {
-  updateFileUrl: React.Dispatch<React.SetStateAction<string>>;
+  updateFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+  createClient: () => Promise<void>;
 }
 
-const UploadImage: React.FC<Props> = ({updateFileUrl}) => {
+const UploadFile: React.FC<Props> = ({updateFile, createClient}) => {
   const [selectedImage, setSelectedImage] = useState<File | undefined>(undefined);
 
   return (
@@ -16,7 +17,8 @@ const UploadImage: React.FC<Props> = ({updateFileUrl}) => {
             if (event.target.files[0].type === "application/pdf") {
               console.log(event.target.files[0]);
               setSelectedImage(event.target.files[0]);
-              updateFileUrl(event.target.files[0].name);
+              updateFile(event.target.files[0]);
+              createClient();
             } else {
               console.log("File is not pdf");
             }
@@ -36,4 +38,4 @@ const UploadImage: React.FC<Props> = ({updateFileUrl}) => {
   );
 };
 
-export default UploadImage;
+export default UploadFile;

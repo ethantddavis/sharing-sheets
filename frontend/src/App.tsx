@@ -54,8 +54,6 @@ const App: React.FC = () => {
   //  }
   //}
 
-  
-
   return (
     <body className="App">
       <header className="heading">

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState, useRef } from 'react';
 import {ethers, BigNumber } from 'ethers';
-import UploadImage from './UploadFile';
+import UploadFile from './UploadFile';
 import { create, CID, IPFSHTTPClient } from 'ipfs-http-client';
+import {Buffer} from 'buffer';
 //import contractJson from '';
 
 const contractAddress = "";
@@ -11,26 +12,31 @@ interface Props {
 }
 
 const Mint: React.FC<Props> = ({currentAccount}) => {
-  const [fileUrl, updateFileUrl] = useState<string>('');
+  const [file, updateFile] = useState<File | undefined>(undefined);
   const [client, setClient] = useState<IPFSHTTPClient | undefined>(undefined);
-  
-  let uploaded = false;
+  const [uploaded, setUploaded] = useState<Boolean>(false);
 
-  
-  try {
-    setClient(create({url: fileUrl}));
-  } catch (err) {
-    console.log("ipfs client creation: ", err);
+  const createClient = async () => {
+    try {
+      setClient(create({
+        host: 'ipfs.infura.io',
+        port: 5001,
+        protocol: 'https',
+        headers: {
+          authorization: 'Basic ' + Buffer.from(process.env.REACT_APP_IPFS_ID + ':' + process.env.REACT_APP_IPFS_SECRET).toString('base64')
+        }
+      }));
+    } catch (err) {
+      console.log("ipfs client creation: ", err);
+    }
   }
   
-
   const uploadFile = async () => {
-    if (fileUrl.length > 0) {
-      if (client) {
-        const added = await client.add(fileUrl);
-        console.log(added);
-        uploaded = true;
-      }
+    console.log(client);
+    if (client && file !== undefined) {
+      const added = await (client as IPFSHTTPClient).add(file); 
+      console.log(added);
+      setUploaded(true);
     }
   }
 
@@ -47,20 +53,18 @@ const Mint: React.FC<Props> = ({currentAccount}) => {
         <input type="text"/>
       </div>
       <br/>
-      <UploadImage updateFileUrl={updateFileUrl}/>
+      <UploadFile updateFile={updateFile} createClient={createClient}/> 
       <div className="mint">
-        {client && (
-          <>
-            {uploaded
-              ? <form className="mintButton" onClick={uploadFile}>
-                  Upload File
-                </form>
-              : <form className="mintButton" onClick={mint}>
+        {client
+          ? uploaded 
+              ? <form className="mintButton" onClick={mint}>
                   Mint
                 </form>
-            }
-          </>
-        )}
+              : <form className="mintButton" onClick={uploadFile}>
+                  Upload File
+                </form>
+          : <p>No file selected</p>   
+        }
       </div>
     </div>
   )
