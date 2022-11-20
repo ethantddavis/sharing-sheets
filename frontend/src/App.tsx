@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import MetamaskConnect from "./components/MetamaskConnect";
 import Mint from "./components/Mint";
+import contractJson from "./Sheets.json";
 import { ethers } from "ethers";
 //import axios, { AxiosInstance } from "axios";
 
@@ -11,15 +12,14 @@ const App: React.FC = () => {
   const [chainName, setChainName] = useState<string | undefined>(undefined);
 
   const provider = useRef<ethers.providers.Web3Provider | undefined>(undefined);
-  //const todoListContract = useRef<ethers.Contract | undefined>(undefined);
+  const sheetsContract = useRef<ethers.Contract | undefined>(undefined);
   //const serverApi = useRef<AxiosInstance>(axios.create({
   //  baseURL: `http://localhost:3000/transactions/`
   //}));
 
-  //const contractAddress = "";
+  const contractAddress = "0xAac2d8fe57DCD3C41c7672E7e88809eDb97B36A9";
 
   useEffect(() => {
-
     if (!currentAccount || !ethers.utils.isAddress(currentAccount)) return; 
     if (!window.ethereum) return; 
 
@@ -43,16 +43,17 @@ const App: React.FC = () => {
         );
       } else {
         setChainName("Goerli");
-        //initilizeContract();
+        initilizeContract();
       }
     });
   }, [currentAccount]);
 
-  //const initilizeContract = async() => {
-  //  if (provider.current) {
-  //    todoListContract.current = new ethers.Contract(contractAddress, contractJson["abi"], provider.current.getSigner());
-  //  }
-  //}
+  const initilizeContract = async() => {
+    if (provider.current) {
+      sheetsContract.current = new ethers.Contract(contractAddress, contractJson.abi, provider.current.getSigner());
+      console.log(sheetsContract.current);
+    }
+  }
 
   return (
     <body className="App">
@@ -70,7 +71,7 @@ const App: React.FC = () => {
       <div className="body">
         <main className="content">
           <Mint 
-            currentAccount={currentAccount}
+            sheetsContract={sheetsContract}
           />
         </main>
 

@@ -3,18 +3,27 @@ import {ethers, BigNumber } from 'ethers';
 import UploadFile from './UploadFile';
 import { create, CID, IPFSHTTPClient } from 'ipfs-http-client';
 import {Buffer} from 'buffer';
-//import contractJson from '';
-
-const contractAddress = "";
 
 interface Props {
-  currentAccount: string | undefined;
+  sheetsContract: React.MutableRefObject<ethers.Contract | undefined>;
 }
 
-const Mint: React.FC<Props> = ({currentAccount}) => {
+const Mint: React.FC<Props> = ({sheetsContract}) => {
   const [file, updateFile] = useState<File | undefined>(undefined);
   const [client, setClient] = useState<IPFSHTTPClient | undefined>(undefined);
-  const [uploaded, setUploaded] = useState<Boolean>(false);
+  const [contributors, setContributors] = useState<string[] | undefined>(undefined);
+  const [title, setTitle] = useState<string | undefined>(undefined);
+  const [ipfs, setIpfs] = useState<string | undefined>(undefined);
+
+  const changeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+    console.log(title);
+  }
+
+  const changeContributors = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setContributors([event.target.value]);
+    console.log(contributors);
+  }
 
   const createClient = async () => {
     try {
@@ -34,29 +43,35 @@ const Mint: React.FC<Props> = ({currentAccount}) => {
   const uploadFile = async () => {
     console.log(client);
     if (client && file !== undefined) {
-      const added = await (client as IPFSHTTPClient).add(file); 
-      console.log(added);
-      setUploaded(true);
+      const result = await (client as IPFSHTTPClient).add(file); 
+      console.log(result.path);
+      setIpfs(result.path);
     }
   }
 
   const mint = async () => {
-    console.log("Im mintiiiiing");
+    if (sheetsContract.current && title && contributors) {
+      const tx = await sheetsContract.current.mint(contributors, title, ipfs);
+      const receipt = await tx.wait();
+      console.log(receipt);
+    } else {
+      console.log("mint not ready");
+    }
   }
 
   return (
     <div>
       <div>
         Title:&nbsp;
-        <input type="text" />
+        <input type="text" placeholder="Title" onChange={event => changeTitle(event)}/>
         Author:&nbsp;
-        <input type="text"/>
+        <input type="text" placeholder="Composer/Contributors" onChange={event => changeContributors(event)}/>
       </div>
       <br/>
       <UploadFile updateFile={updateFile} createClient={createClient}/> 
       <div className="mint">
         {client
-          ? uploaded 
+          ? ipfs 
               ? <form className="mintButton" onClick={mint}>
                   Mint
                 </form>

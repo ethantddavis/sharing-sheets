@@ -30,20 +30,6 @@ contract Sheets is ERC721, ERC721Enumerable, ERC721URIStorage {
         return tokenId;
     }
 
-    function mint(string memory contributor, string memory title, string memory uri) 
-        public returns(uint256 tokenId)
-    {
-        tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-
-        _contributors[tokenId] = [contributor];
-        _title[tokenId] = title;
-        _safeMint(msg.sender, tokenId);
-        _setTokenURI(tokenId, uri);
-
-        return tokenId;
-    }
-
     function getContributors(uint256 tokenId) public view returns(string[] memory) {
         return _contributors[tokenId];
     }

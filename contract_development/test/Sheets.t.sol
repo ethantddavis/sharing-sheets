@@ -8,6 +8,7 @@ import "openzeppelin-contracts/token/ERC721/IERC721Receiver.sol";
 contract SheetsTest is Test, IERC721Receiver {
     Sheets public sheets;
     string public ipfsPath;
+    string[] public input;
 
     function onERC721Received(
         address operator,
@@ -21,10 +22,16 @@ contract SheetsTest is Test, IERC721Receiver {
     function setUp() public {
         sheets = new Sheets();
         ipfsPath = "QmaBCkhaeaaCzEKK1K9xzL39vMaXjA6QU1aERqSoXfVJmm";
+        input = new string[](3);
+        input[0] = "Me";
+        input[1] = "You";
+        input[2] = "Him";
     }
 
     function testMintSingleContributor() public {
-        uint256 tokenId = sheets.mint("Me", "This", ipfsPath);
+        string[] memory singleInput = new string[](1);
+        singleInput[0] = "Me";
+        uint256 tokenId = sheets.mint(singleInput, "This", ipfsPath);
 
         string memory contributor = sheets.getContributors(tokenId)[0];
 
@@ -32,10 +39,6 @@ contract SheetsTest is Test, IERC721Receiver {
     }
 
     function testMintMultipleContributors() public {
-        string[] memory input = new string[](3);
-        input[0] = "Me";
-        input[1] = "You";
-        input[2] = "Him";
         uint256 tokenId = sheets.mint(input, "This", ipfsPath);
 
         string[] memory contributors = sheets.getContributors(tokenId);
@@ -46,7 +49,7 @@ contract SheetsTest is Test, IERC721Receiver {
     }
 
     function testMintTitle() public {
-        uint256 tokenId = sheets.mint("Me", "This", ipfsPath);
+        uint256 tokenId = sheets.mint(input, "This", ipfsPath);
 
         string memory title = sheets.getTitle(tokenId);
 
@@ -54,7 +57,7 @@ contract SheetsTest is Test, IERC721Receiver {
     }
 
     function testMintUri() public {
-        uint256 tokenId = sheets.mint("Me", "This", ipfsPath);
+        uint256 tokenId = sheets.mint(input, "This", ipfsPath);
 
         string memory uri = sheets.tokenURI(tokenId);
 
@@ -62,8 +65,8 @@ contract SheetsTest is Test, IERC721Receiver {
     }
 
     function testMintIncrement() public {
-        uint256 firstTokenId = sheets.mint("Me", "This", ipfsPath);
-        uint256 secondTokenId = sheets.mint("Me", "This", ipfsPath);
+        uint256 firstTokenId = sheets.mint(input, "This", ipfsPath);
+        uint256 secondTokenId = sheets.mint(input, "This", ipfsPath);
 
         assertTrue(firstTokenId == secondTokenId - 1);
     }
