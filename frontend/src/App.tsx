@@ -17,7 +17,8 @@ const App: React.FC = () => {
   //  baseURL: `http://localhost:3000/transactions/`
   //}));
 
-  const contractAddress = "0xAac2d8fe57DCD3C41c7672E7e88809eDb97B36A9";
+  //const contractAddress = "0xDF74cA340d71b6bcd8Cf00479cF2c2F317Cf395B";
+  const contractAddress = "0xbC1477FfBf886e76C9454FB9fe800EaD54bCf846";
 
   useEffect(() => {
     if (!currentAccount || !ethers.utils.isAddress(currentAccount)) return; 
@@ -36,7 +37,7 @@ const App: React.FC = () => {
         : tempChainName = newNetwork.name;
 
       // notify wrong network
-      if (newNetwork.chainId !== 5) {
+      if (newNetwork.chainId !== 5 && newNetwork.chainId !== 280) {
         setChainName("Switch network to Goerli Testnet to interact with contract (currently " 
           + tempChainName
           + ")"

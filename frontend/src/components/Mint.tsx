@@ -44,12 +44,13 @@ const Mint: React.FC<Props> = ({sheetsContract}) => {
     console.log(client);
     if (client && file !== undefined) {
       const result = await (client as IPFSHTTPClient).add(file); 
-      console.log(result.path);
-      setIpfs(result.path);
+      console.log("https://ipfs.io/ipfs/" + result.path);
+      setIpfs("https://ipfs.io/ipfs/" + result.path);
     }
   }
 
-  const mint = async () => {
+  const mint = async () => { 
+    console.log(sheetsContract.current);
     if (sheetsContract.current && title && contributors) {
       const tx = await sheetsContract.current.mint(contributors, title, ipfs);
       const receipt = await tx.wait();
