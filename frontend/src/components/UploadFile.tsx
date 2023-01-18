@@ -11,6 +11,7 @@ const UploadFile: React.FC<Props> = ({updateFile, createClient}) => {
   return (
     <div>
       <input
+        className="fileSelector"
         type="file"
         onChange={(event) => {
           if (event.target.files !== null) {
@@ -30,8 +31,7 @@ const UploadFile: React.FC<Props> = ({updateFile, createClient}) => {
       <br />
       {selectedImage && (
         <div>
-          <br/>
-          <embed src={URL.createObjectURL(selectedImage)}/>
+          <embed src={URL.createObjectURL(selectedImage)} className="pdfView"/>
         </div>
       )}      
     </div>

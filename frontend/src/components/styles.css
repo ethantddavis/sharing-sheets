@@ -7,8 +7,8 @@
 
 .connect {
     display: flex;
-    width: 12%;
-    height: 50px;
+    width: 16%;
+    height: 30px;
     border-radius: 5px;
     padding: 5px;
     margin-right: 10px;
@@ -33,25 +33,69 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: 10px;
     color: white;
 }
 
 .accountInfo {
     margin-left: 10px;
-    font-size: 27;
+    font-size: 10px;
     color: white;
 }
 
-@media (max-width: 1200px) {
-    
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
 }
 
-@media (max-width: 700px) {
+.attributes {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.fileSelector {
+    margin: 10px;
+}
+
+.pdfView {
+    width: 100vw;
+}
+
+.mintButton {
+    display: flex;
+    width: 40%;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+    background-color: #2f74c0;
+    transition: 0.2s all;
+    box-shadow: 0 0 10px black;
+    cursor: pointer;
+    color: white;
+}
+
+.mintButton:hover {
+    background-color: #388ae2;
+}  
+
+.mintButton:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px black;
+}
+
+
+@media (min-width: 768px) {
+
+}
+
+/*@media (max-width: 700px) {
     .connect {
         height: 30px;
     }
     .connectButton {
         font-size: 10px;
     }
-}
+}*/

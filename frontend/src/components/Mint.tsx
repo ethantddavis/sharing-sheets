@@ -62,11 +62,11 @@ const Mint: React.FC<Props> = ({sheetsContract}) => {
 
   return (
     <div>
-      <div>
+      <div className="attributes">
         Title:&nbsp;
         <input type="text" placeholder="Title" onChange={event => changeTitle(event)}/>
         Author:&nbsp;
-        <input type="text" placeholder="Composer/Contributors" onChange={event => changeContributors(event)}/>
+        <input type="text" placeholder="Composer" onChange={event => changeContributors(event)}/>
       </div>
       <br/>
       <UploadFile updateFile={updateFile} createClient={createClient}/> 
